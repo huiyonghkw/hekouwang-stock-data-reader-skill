@@ -41,6 +41,7 @@ node    templates/screenshot.js   out/603629     # 截图 output/，出图即删
 
 - **取数 + 分析（`fetch.py` / `analyze.py`）= 自包含**：只需 `akshare + pandas`，独立可跑，产出 CSV 与 `analysis.json`，不依赖任何私有资源。
 - **出图（`build_report.py`）软依赖 `hekouwang-content-factory`**（会勇禾口王内容工厂 · 私有视觉系统，不公开分发）：贴图复用它的**字体（Anthropic Sans/Mono + 思源黑体）、V2 米白 / V3 财经视觉规范、`_build.py` + `screenshot.js` 流水线**。`build_report.py` 里的字体路径默认指向本机的 content-factory。
+  > ⚠️ **该依赖是 PRIVATE 私有仓库，非授权无法 clone / 获取**。本公开仓库只"点名"依赖，并不分发其字体与视觉流水线；且 Anthropic Sans 为专有字体，本就不可转分发。需要成品出图请见下方「付费」。
 - **没有 content-factory 时**：`fetch` / `analyze` 照常用；`build_report` 因缺字体会样式回退（功能仍跑，但不是成品观感）。
 
 ## 免费 / 付费（Freemium）
