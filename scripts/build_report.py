@@ -27,6 +27,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 .c{position:relative;width:1080px;height:1350px;display:flex;flex-direction:column;padding:74px 76px 0;overflow:hidden;isolation:isolate;background:radial-gradient(1300px 1050px at 50% -12%,#fffdf8,#faf9f5 46%,#f4f1ea)}
 .mesh{position:absolute;inset:0;z-index:0;opacity:.7;background-image:linear-gradient(rgba(20,20,19,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(20,20,19,.022) 1px,transparent 1px);background-size:74px 74px;-webkit-mask:radial-gradient(circle at 50% 24%,#000,transparent 86%)}
 .orb{position:absolute;border-radius:50%;filter:blur(120px);z-index:0}.orb.a{width:680px;height:680px;background:radial-gradient(circle,rgba(193,95,60,.10),transparent 70%);top:-220px;right:-160px}.orb.b{width:440px;height:440px;background:radial-gradient(circle,rgba(92,107,122,.09),transparent 70%);bottom:-140px;left:-120px}
+.hud{position:absolute;inset:40px;z-index:1;pointer-events:none}.hud i{position:absolute;width:30px;height:30px;border:2px solid var(--hot);opacity:.3}
+.hud i:nth-child(1){left:0;top:0;border-right:0;border-bottom:0}.hud i:nth-child(2){right:0;top:0;border-left:0;border-bottom:0}.hud i:nth-child(3){left:0;bottom:0;border-right:0;border-top:0}.hud i:nth-child(4){right:0;bottom:0;border-left:0;border-top:0}
 .sysbar{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:20px;letter-spacing:.16em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--line);padding-bottom:20px}
 .sysbar .l{display:flex;align-items:center;gap:12px;color:var(--text2)}.sysbar .dot{width:11px;height:11px;border-radius:50%;background:var(--hot)}.sysbar .r{color:var(--hot)}
 .bd{flex:1;position:relative;z-index:2;overflow:hidden;width:100%;min-height:0}.fit{position:absolute;top:0;left:0;transform-origin:top left}
@@ -58,6 +60,7 @@ FIT = """<script>(function(){function fit(){var bd=document.querySelector('.bd')
 
 def card(idx, n, code, right, inner):
     return (HEAD + '<div class="c"><div class="mesh"></div><div class="orb a"></div><div class="orb b"></div>'
+            + '<div class="hud"><i></i><i></i><i></i><i></i></div>'
             + ('<div class="ghost">%02d</div>' % idx)
             + '<div class="sysbar"><div class="l"><span class="dot"></span>财经观察 / 公开数据速读</div><div class="r">' + right + '</div></div>'
             + '<div class="bd"><div class="fit">' + inner + '</div></div>'

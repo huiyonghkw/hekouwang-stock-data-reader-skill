@@ -4,6 +4,16 @@
 
 **内置金融合规护栏**：不荐股、不预测涨跌、不给买卖点，自动套风险提示条。是 Claude Code / Claude Agent 的可复用 Skill，也是「3 天一只·公开数据速读」财经栏目的发动机。
 
+## 样例（V2 米白 · 数据控制台风）
+
+> 输入 `603629`，一条流水线跑出的报告卡（成品观感，含 HUD 取景框 / 幽灵章节号 / 自制 SVG 图表）：
+
+| 封面 | 主力资金面 | 利润结构 |
+|---|---|---|
+| ![封面](examples/sample-cover.png) | ![资金面](examples/sample-fundflow.png) | ![利润结构](examples/sample-structure.png) |
+
+一份报告 8 张一套：价格轨迹 · 主力资金进出 · 龙虎榜结构 · 利润质量 · 利润结构 · 风险线索 · 风险提示条，可发公众号 / 头条。
+
 ## 安装
 
 ```bash
@@ -26,6 +36,19 @@ node    templates/screenshot.js   out/603629     # 截图 output/，出图即删
 ## 指标体系
 
 价格/市值/估值轨迹 · 主力资金进出（含"涨着出货"反差日）· 龙虎榜席位结构（通道盘 vs 机构长线）· 利润质量（净利 vs 经营现金流）· 利润结构（分部收入 vs 毛利占比）· 资产负债 · 风险线索。
+
+## 生态依赖
+
+- **取数 + 分析（`fetch.py` / `analyze.py`）= 自包含**：只需 `akshare + pandas`，独立可跑，产出 CSV 与 `analysis.json`，不依赖任何私有资源。
+- **出图（`build_report.py`）软依赖 `hekouwang-content-factory`**（会勇禾口王内容工厂 · 私有视觉系统，不公开分发）：贴图复用它的**字体（Anthropic Sans/Mono + 思源黑体）、V2 米白 / V3 财经视觉规范、`_build.py` + `screenshot.js` 流水线**。`build_report.py` 里的字体路径默认指向本机的 content-factory。
+- **没有 content-factory 时**：`fetch` / `analyze` 照常用；`build_report` 因缺字体会样式回退（功能仍跑，但不是成品观感）。
+
+## 免费 / 付费（Freemium）
+
+- **免费**：取数引擎 + 指标计算（`fetch.py` / `analyze.py`）+ 报告结构与合规规范。拉数据、算指标、出结构化 `analysis.json`，开源可用。
+- **付费（增值服务）**：**成品级数据报告图** —— V2 米白「数据控制台」风的 8 贴图 / 公众号长文 / 头条三件套（即上方样例）。它依赖私有视觉系统（品牌字体与版式，见「生态依赖」），**不随本仓库分发**。需要出图版报告，请联系 **@huiyonghkw** 获取。
+
+> 一句话：**取数算账免费，出「好看的报告图」找我。**
 
 ## ⚠️ 合规（务必先读 `references/compliance.md`）
 

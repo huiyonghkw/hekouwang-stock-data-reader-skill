@@ -4,6 +4,9 @@ output/
 *.png
 *.csv
 analysis.json
+# 但样例图入库（README 展示用）
+!examples/
+!examples/*.png
 
 # python
 __pycache__/
