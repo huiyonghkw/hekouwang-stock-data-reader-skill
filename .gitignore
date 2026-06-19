@@ -1,0 +1,15 @@
+# 运行产物 / 取数缓存（不入库）
+out/
+output/
+*.png
+*.csv
+analysis.json
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 系统
+.DS_Store
