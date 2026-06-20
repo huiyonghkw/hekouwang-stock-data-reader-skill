@@ -1,19 +1,20 @@
-# VHS 录制脚本 —— 生成 examples/demo.gif（真实安装+使用）
-# 用法：cd 到 skill 根目录，vhs examples/demo.tape
+# VHS 录制脚本 —— 生成 examples/demo.gif（真实安装+使用 · iTerm2 观感：zsh+Starship+Catppuccin+Nerd Font+eza/bat）
+# 用法：cd 到 skill 根目录，NO_PROXY=localhost,127.0.0.1 vhs examples/demo.tape
 Output examples/demo.gif
 
-Set Shell bash
+Set Shell "zsh"
+Set FontFamily "FiraCode Nerd Font Mono"
 Set FontSize 16
 Set Width 1180
-Set Height 760
-Set Padding 18
+Set Height 780
+Set Padding 20
 Set Theme "Catppuccin Mocha"
 Set TypingSpeed 28ms
 
 Hide
-Type "cd ~/.claude/skills/hekouwang-stock-data-reader-skill && source .venv/bin/activate && clear"
+Type "cd ~/.claude/skills/hekouwang-stock-data-reader-skill && source .venv/bin/activate && setopt interactive_comments 2>/dev/null; clear"
 Enter
-Sleep 1s
+Sleep 1500ms
 Show
 
 Type "# 个股公开数据速读 · 输入一个代码 → 合规中立复盘报告"
@@ -43,6 +44,6 @@ Sleep 400ms
 Type "python scripts/build_report.py out/603629 利通电子"
 Enter
 Sleep 2500ms
-Type "ls -1 out/603629/output/"
+Type "ls out/603629/output/"
 Enter
-Sleep 3s
+Sleep 3500ms
