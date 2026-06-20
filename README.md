@@ -6,7 +6,7 @@
 
 <p align="center">
   <img src="examples/demo.gif" width="760" alt="hekouwang-stock-data-reader-skill 安装与使用演示">
-  <br><sub>↑ 底层流水线真实演示（日常只需对 Claude 说「出一份 603629 的数据速读」，它会自动跑完这一串）</sub>
+  <br><sub>↑ 真实 Claude Code 会话：对它说一句，自动跑完「取数 → 算内核 → 出报告」</sub>
 </p>
 
 ## 核心价值 · 凭什么不一样
