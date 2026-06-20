@@ -6,7 +6,7 @@
 
 <p align="center">
   <img src="examples/demo.gif" width="760" alt="hekouwang-stock-data-reader-skill 安装与使用演示">
-  <br><sub>↑ 真实演示：装好依赖 → 输入一个代码 → 取数 → 算内核 → 出一套报告贴图</sub>
+  <br><sub>↑ 底层流水线真实演示（日常只需对 Claude 说「出一份 603629 的数据速读」，它会自动跑完这一串）</sub>
 </p>
 
 ## 核心价值 · 凭什么不一样
@@ -54,9 +54,20 @@
 pip install -r requirements.txt    # akshare + pandas，建议 venv
 ```
 
-放到 `~/.claude/skills/hekouwang-stock-data-reader-skill/`，Claude Code 会自动识别。触发词见 `SKILL.md`。
+放到 `~/.claude/skills/hekouwang-stock-data-reader-skill/`，Claude Code 会**自动识别**。之后**对 Claude 说人话**即可（见下），不用记命令。
 
-## 用法（三步）
+## 用法 · 对 Claude 说人话（推荐）
+
+这是个 **Claude Code Skill** —— 装好后直接对 Claude 说，它会自动按序跑「取数 → 算内核 → 出报告」：
+
+> 💬 「用 **stock-data-reader** 出一份 **603629** 的数据速读」
+> 💬 「给我 **600519** 做个资金面复盘，要发公众号那版」
+> 💬 「**3 天一只**，这次拆 **002415**，出头条三件套」
+
+Claude 认出代码后，自动完成 `fetch → analyze → build_report → screenshot`，再按 `references/report-structure.md` 润色中立文案、套合规风险条，产出可直接发布的贴图 / 长文。**全程你只说一句话。**
+
+<details>
+<summary>▸ 底层流水线（Claude 自动执行；想手动跑 / 接 CI 时才用得到）</summary>
 
 ```bash
 python3 scripts/fetch.py  603629  out/603629     # 取数 → CSV + _report.json
@@ -65,7 +76,8 @@ python3 scripts/build_report.py   out/603629 公司简称   # 出 8 贴图初稿
 node    templates/screenshot.js   out/603629     # 截图 output/，出图即删 HTML
 ```
 
-`build_report.py` 出的是**数字正确的初稿**；中立复盘文案按 `references/report-structure.md` 人工/LLM 润色后再截图交付。
+`build_report.py` 出的是**数字正确的初稿**；中立复盘文案按 `references/report-structure.md` 润色后再截图交付。
+</details>
 
 ## 指标体系
 
