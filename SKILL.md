@@ -9,6 +9,14 @@ description: >
   触发词：个股数据速读 / 扒公司公开数据 / 资金面复盘 / 出个股报告 / 3天一只 /
   stock-data-reader / 给我一只股的数据体检 / 用 akshare 拉某股数据。
   ⚠️ 个股报告只走财经账号公众号/头条，绝不上小红书主账号。
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - AskUserQuestion
 ---
 
 # 个股公开数据速读 · Skill

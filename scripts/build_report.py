@@ -9,7 +9,11 @@ import os
 import sys
 import json
 
-FONTS = "/Users/huiyonghkw/.claude/skills/hekouwang-content-factory/assets/fonts"  # 对外发布改相对内嵌
+# 字体取自兄弟 skill hekouwang-content-factory（两者同在 ~/.claude/skills/ 下）。
+# 动态推算 skills 目录 → 拼兄弟 skill，换机/改用户名都不断；可用环境变量覆盖；对外发布改相对内嵌。
+_SKILLS_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+FONTS = os.environ.get("HEKOUWANG_FONTS_DIR") or os.path.join(
+    _SKILLS_DIR, "hekouwang-content-factory", "assets", "fonts")
 
 HEAD = """<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
