@@ -1,5 +1,10 @@
 ---
 name: hekouwang-stock-data-reader-skill
+slug: hekouwang-stock-data-reader-skill
+displayName: 个股公开数据速读（A股 · akshare）
+summary: 输入一个 A 股代码，用 akshare 拉取资金流 / 龙虎榜 / 估值band / 财务三表 / 主营构成 / 北向 / 日K 等公开数据，算出固定指标体系，产出「中立事后复盘」形态的贴图 / 长文 / 头条三件套。内置金融合规护栏：不荐股、不预测涨跌、不给买卖点，自动套风险提示条。
+license: MIT-0
+homepage: https://github.com/huiyonghkw/hekouwang-stock-data-reader-skill
 version: 1.1.0
 description: >
   会勇禾口王 · 个股公开数据速读 Skill。输入一个 A 股代码，自动用 akshare 拉取「资金流 /
