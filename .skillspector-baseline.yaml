@@ -1,0 +1,25 @@
+# SkillSpector baseline — findings listed here are suppressed on future scans.
+# Edit 'reason' fields and add glob 'rules' as needed. See docs/SUPPRESSION.md.
+version: 1
+rules: []
+fingerprints:
+- hash: sha256:d86f30a1d959af6c
+  rule_id: AST7
+  file: scripts/fetch.py
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:650c6d65ed05eb23
+  rule_id: LP1
+  file: scripts/build_report.py
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:bfa7f8e5bc7c7e4f
+  rule_id: SC1
+  file: requirements.txt
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:dbbbb9bc7c633a83
+  rule_id: SC1
+  file: requirements.txt
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
