@@ -5,7 +5,7 @@ displayName: 个股公开数据速读（A股 · akshare）
 summary: A-share stock data reader / akshare pipeline — fund flow, LHB seats, financials to compliance-safe recap charts. Not investment advice.
 license: MIT-0
 homepage: https://github.com/huiyonghkw/hekouwang-stock-data-reader-skill
-version: 1.2.1
+version: 1.2.2
 description: >
   会勇禾口王 · 个股公开数据速读 Skill。输入一个 A 股代码，自动用 akshare 拉取「资金流 /
   龙虎榜 / 估值band / 财务三表 / 主营构成 / 北向 / 日K」等公开数据，算出固定指标体系
