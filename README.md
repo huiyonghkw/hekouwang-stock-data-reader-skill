@@ -4,6 +4,13 @@
 
 **内置金融合规护栏**：不荐股、不预测涨跌、不给买卖点，自动套风险提示条。是 Claude Code / Claude Agent 的可复用 Skill，也是「3 天一只·公开数据速读」财经栏目的发动机。
 
+## 30 秒验收
+
+```bash
+bash scripts/bootstrap.sh && source .venv/bin/activate
+python3 scripts/fetch.py --probe
+```
+
 <p align="center">
   <img src="examples/demo.gif" width="760" alt="hekouwang-stock-data-reader-skill 安装与使用演示">
   <br><sub>↑ 真实 Claude Code 会话：对它说一句，自动跑完「取数 → 算内核 → 出报告」</sub>
@@ -116,7 +123,7 @@ node    templates/screenshot.js   out/603629     # 截图 output/，出图即删
 | `SKILL.md` | Skill 入口（Claude 读这个） |
 | `scripts/fetch.py` | 取数引擎（任意代码） |
 | `scripts/analyze.py` | 指标计算 → analysis.json |
-| `scripts/build_report.py` | 据指标出 8 贴图初稿（V2 米白） |
+| `scripts/build_report.py` | 据指标出 8 贴图初稿（`--theme v2` 米白 / `v3` 财经白） |
 | `templates/screenshot.js` | 1080×1350 @2x 截图，出图即删 |
 | `references/compliance.md` | 金融合规护栏 |
 | `references/report-structure.md` | 栏目固定报告结构 |

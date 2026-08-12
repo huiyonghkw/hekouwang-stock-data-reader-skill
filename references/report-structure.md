@@ -25,3 +25,21 @@
 
 ## 工作流
 `fetch.py <代码>` → `analyze.py <out>` → 据 analysis.json 用 build_report.py 出**初稿贴图（数字已对）** → 人/LLM 按本结构润色中立复盘文案 → `screenshot.js` 出图 → 套合规框架交付。
+
+## 祛魅完必须给一把尺子
+
+破「游资揭秘」「外资看好」类叙事时，**不能只列「不能说明什么」**——读者手里要带走能自己复算的工具。
+
+**龙虎榜/席位专题必做**：
+1. 跑 `analyze.py` 的买卖对称度（`seat_symmetry`）
+2. 若有「罕见/集中」判断，对照**当日全市场基准分位**（见 `lhb-symmetry.md`）
+3. 正文给一张「你的票 vs 全场 P25/中位/P75」对照表或等价叙述
+4. 结论止步于「识别席位性质（通道型/集中型）」，不推走势
+
+**自检**：把全篇结论抄成清单——若八成以上是「X 不能说明 Y」，回炉补尺子段落。
+
+## 视觉主题
+
+- 默认 `python3 build_report.py <out>` → **V2 米白**
+- 财经专栏可选 `python3 build_report.py <out> --theme v3` → **V3 Readdy 财经白**（`#fbfcfe` mesh 天蓝淡紫）
+- 无 `hekouwang-content-factory` 字体时：设 `HEKOUWANG_FONTS_DIR` 或接受系统黑体降级（勿用劣质系统字体凑 PNG）

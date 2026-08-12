@@ -15,7 +15,7 @@ _SKILLS_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__
 FONTS = os.environ.get("HEKOUWANG_FONTS_DIR") or os.path.join(
     _SKILLS_DIR, "hekouwang-content-factory", "assets", "fonts")
 
-HEAD = """<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+HEAD_TPL = """<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -57,13 +57,26 @@ h1{font-size:88px;line-height:1.06;font-weight:900;letter-spacing:-.03em;margin-
 .ghost{position:absolute;top:130px;right:-26px;z-index:1;font-family:var(--mono);font-weight:800;font-size:400px;line-height:.8;color:var(--text);opacity:.05;letter-spacing:-.06em}
 .pn{position:absolute;right:76px;bottom:120px;z-index:3;font-family:var(--mono);font-size:22px;color:var(--text3)}
 .ft{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;height:104px;border-top:1px solid var(--line);margin-top:14px}.brand{font-family:var(--brand);font-size:30px;font-weight:800;color:var(--text)}.handle{font-family:var(--mono);font-size:23px;color:var(--text3)}
-</style></head><body>""".replace("FONTS", FONTS)
+</style></head><body>"""
+
+HEAD = HEAD_TPL.replace("FONTS", FONTS)
+
+def head_for(theme="v2"):
+    h = HEAD
+    if theme == "v3":
+        h = (h.replace("--bg:#faf9f5", "--bg:#fbfcfe")
+               .replace("--hot:#c15f3c", "--hot:#111111")
+               .replace("--hot2:#d07a52", "--hot2:#333333")
+               .replace("background:radial-gradient(1300px 1050px at 50% -12%,#fffdf8,#faf9f5 46%,#f4f1ea)",
+                        "background:radial-gradient(900px 600px at 20% -5%,rgba(147,197,253,.15),transparent 50%),"
+                        "radial-gradient(700px 500px at 85% 10%,rgba(196,181,253,.12),transparent 55%),#fbfcfe"))
+    return h
 
 FIT = """<script>(function(){function fit(){var bd=document.querySelector('.bd'),el=document.querySelector('.fit');if(!bd||!el)return;var W=bd.clientWidth,H=bd.clientHeight,k=1;for(var i=0;i<7;i++){el.style.width=(W/k)+'px';var vis=el.scrollHeight*k;var nk=k*(H/vis);nk=Math.max(0.5,Math.min(1.08,nk));if(Math.abs(nk-k)<0.004){k=nk;break;}k=nk;}el.style.width=(W/k)+'px';el.style.transform='scale('+k+')';var fh=el.scrollHeight*k;el.style.top=(fh<H?(H-fh)/2:0)+'px';}if(document.fonts&&document.fonts.ready){document.fonts.ready.then(fit);}fit();setTimeout(fit,300);})();</script></body></html>"""
 
 
-def card(idx, n, code, right, inner):
-    return (HEAD + '<div class="c"><div class="mesh"></div><div class="orb a"></div><div class="orb b"></div>'
+def card(idx, n, code, right, inner, theme="v2"):
+    return (head_for(theme) + '<div class="c"><div class="mesh"></div><div class="orb a"></div><div class="orb b"></div>'
             + '<div class="hud"><i></i><i></i><i></i><i></i></div>'
             + ('<div class="ghost">%02d</div>' % idx)
             + '<div class="sysbar"><div class="l"><span class="dot"></span>财经观察 / 公开数据速读</div><div class="r">' + right + '</div></div>'
@@ -155,7 +168,7 @@ def svg_struct(st):
     return "".join(s)
 
 
-def main(outdir, name=None):
+def main(outdir, name=None, theme="v2"):
     with open(os.path.join(outdir, "analysis.json"), encoding="utf-8") as f:
         A = json.load(f)
     code = A.get("code", "")
@@ -243,12 +256,17 @@ def main(outdir, name=None):
     for i, (right, inner) in enumerate(cards, 1):
         fn = "%02d-%s.html" % (i, SLUG.get(right, "card"))
         with open(os.path.join(outdir, fn), "w", encoding="utf-8") as fobj:
-            fobj.write(card(i, n, code, right, inner))
-        print("✓", fn)
+            fobj.write(card(i, n, code, right, inner, theme))
+        print("✓", fn, "(%s)" % theme)
     print("done:", n, "cards →", outdir, "（数字已对；中立文案请按 report-structure.md 润色后截图）")
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        sys.exit("用法：python3 build_report.py <out目录> [公司简称]")
-    main(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)
+    import argparse
+    ap = argparse.ArgumentParser(description="个股报告贴图初稿")
+    ap.add_argument("outdir", help="analyze.py 输出目录")
+    ap.add_argument("name", nargs="?", default=None, help="公司简称")
+    ap.add_argument("--theme", choices=("v2", "v3"), default=os.environ.get("STOCK_REPORT_THEME", "v2"),
+                    help="v2=米白(默认) v3=Readdy财经白")
+    args = ap.parse_args()
+    main(args.outdir, args.name, args.theme)

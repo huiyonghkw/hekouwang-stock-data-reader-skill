@@ -8,6 +8,15 @@
 
 ---
 
+## [1.2.1] - 2026-08-12
+
+### 功能
+- `build_report.py --theme v3`：V3 Readdy 财经白一键开关（默认 v2 米白）
+
+### 优化
+- `references/report-structure.md`：祛魅完必须给一把尺子（龙虎榜基准分位）
+- README：30 秒验收；summary 英文 SEO 关键词
+
 ## [1.2.0] - 2026-08-12
 
 ### 功能
