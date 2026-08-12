@@ -118,9 +118,34 @@ def run(code, outdir):
     print("CSV 已存：", outdir)
 
 
+def probe():
+    """轻量探针：依赖是否可用、akshare 能否连上东财接口。"""
+    print("=== stock-data-reader 探针 ===")
+    try:
+        import akshare as ak  # noqa: F401
+        import pandas as pd  # noqa: F401
+        print("[OK]   import akshare, pandas")
+    except ImportError as e:
+        print("[FAIL] import:", e)
+        print("修复: bash scripts/bootstrap.sh")
+        return 1
+    try:
+        df = ak.stock_zh_a_spot_em()
+        n = len(df) if df is not None else 0
+        print("[OK]   ak.stock_zh_a_spot_em rows=%d" % n)
+    except Exception as e:
+        print("[FAIL] akshare 联网:", type(e).__name__, e)
+        print("提示: 公司代理可能挡东财；可 unset HTTP_PROXY HTTPS_PROXY 后重试")
+        return 2
+    print("探针通过，可跑: python3 scripts/fetch.py <代码>")
+    return 0
+
+
 if __name__ == "__main__":
+    if len(sys.argv) >= 2 and sys.argv[1] in ("--probe", "-p"):
+        sys.exit(probe())
     if len(sys.argv) < 2:
-        sys.exit("用法：python3 fetch.py <代码> [输出目录]")
+        sys.exit("用法：python3 fetch.py <代码> [输出目录]\n      python3 fetch.py --probe")
     code = sys.argv[1]
     outdir = sys.argv[2] if len(sys.argv) > 2 else os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "..", "out", code)

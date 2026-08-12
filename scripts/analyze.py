@@ -71,16 +71,51 @@ def run(outdir):
             A["fundflow"] = {"net_4mo_yi": total, "key_days": key}
             print("主力 4 月以来净额合计：%s 亿" % total)
 
-    # 3) 龙虎榜结构（席位类型计数）
+    # 3) 龙虎榜结构（席位类型计数 + 买卖对称度）
     l = load(outdir, "lhb_detail")
     if l is not None:
         seatcol = col(l, ["交易营业部名称", "营业部"])
+        dircol = col(l, ["方向"]) or ("方向" if "方向" in l.columns else None)
         if seatcol:
             seats = l[seatcol].astype(str)
             n_hgt = int(seats.str.contains("沪股通|深股通").sum())
             n_inst = int(seats.str.contains("机构专用").sum())
-            A["lhb"] = {"rows": int(len(l)), "n_northbound_rows": n_hgt, "n_institution_rows": n_inst}
-            print("龙虎榜：%d 行，沪深股通 %d，机构专用 %d" % (len(l), n_hgt, n_inst))
+            lhb = {"rows": int(len(l)), "n_northbound_rows": n_hgt, "n_institution_rows": n_inst}
+            if dircol:
+                sym = []
+                n_bidir = 0
+                n_channel = 0
+                for seat, grp in l.groupby(seatcol):
+                    buys = int((grp[dircol].astype(str) == "买入").sum())
+                    sells = int((grp[dircol].astype(str) == "卖出").sum())
+                    if buys == 0 and sells == 0:
+                        continue
+                    if buys > 0 and sells > 0:
+                        n_bidir += 1
+                    ratio = round(buys / sells, 2) if sells > 0 else None
+                    if ratio is not None and 0.85 <= ratio <= 1.15 and (buys + sells) >= 4:
+                        n_channel += 1
+                    sym.append({
+                        "seat": str(seat)[:48],
+                        "buys": buys,
+                        "sells": sells,
+                        "buy_sell_ratio": ratio,
+                    })
+                sym.sort(key=lambda x: x["buys"] + x["sells"], reverse=True)
+                lhb["n_bidirectional_seats"] = n_bidir
+                lhb["n_channel_like_seats"] = n_channel
+                lhb["seat_symmetry"] = sym[:10]
+                lhb["symmetry_note"] = (
+                    "买卖比近1且出现频次高→通道型席位，勿推方向；"
+                    "解读前建议对照当日全市场基准（见 references/lhb-symmetry.md）"
+                )
+                print(
+                    "龙虎榜：%d 行，沪深股通 %d，机构 %d；双向席位 %d，通道型 %d"
+                    % (len(l), n_hgt, n_inst, n_bidir, n_channel)
+                )
+            else:
+                print("龙虎榜：%d 行，沪深股通 %d，机构专用 %d" % (len(l), n_hgt, n_inst))
+            A["lhb"] = lhb
 
     # 4) 利润质量：归母净利 vs 经营现金流（最近几期）
     p = load(outdir, "profit")

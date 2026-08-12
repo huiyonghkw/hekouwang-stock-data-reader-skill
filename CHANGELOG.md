@@ -8,6 +8,18 @@
 
 ---
 
+## [1.2.0] - 2026-08-12
+
+### 功能
+- **`scripts/bootstrap.sh`**：一键 venv + `pip install -r requirements.txt`
+- **`scripts/fetch.py --probe`**：依赖与 akshare 联网探针
+- **`analyze.py`**：龙虎榜席位买卖对称度（双向席位数、通道型计数、`seat_symmetry`）
+- **`references/lhb-symmetry.md`**：对称度解读护栏与当日基准要求
+- **`references/title-checklist.md`**：标题/封面合规自检清单
+
+### 变更
+- `requirements.txt`：pin `akshare>=1.18,<2.0`、`pandas>=2.0,<3.0`
+
 ## [1.1.0]
 
 ### 变更

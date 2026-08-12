@@ -5,7 +5,7 @@ displayName: 个股公开数据速读（A股 · akshare）
 summary: 输入一个 A 股代码，用 akshare 拉取资金流 / 龙虎榜 / 估值band / 财务三表 / 主营构成 / 北向 / 日K 等公开数据，算出固定指标体系，产出「中立事后复盘」形态的贴图 / 长文 / 头条三件套。内置金融合规护栏：不荐股、不预测涨跌、不给买卖点，自动套风险提示条。
 license: MIT-0
 homepage: https://github.com/huiyonghkw/hekouwang-stock-data-reader-skill
-version: 1.1.0
+version: 1.2.0
 description: >
   会勇禾口王 · 个股公开数据速读 Skill。输入一个 A 股代码，自动用 akshare 拉取「资金流 /
   龙虎榜 / 估值band / 财务三表 / 主营构成 / 北向 / 日K」等公开数据，算出固定指标体系
@@ -37,9 +37,12 @@ allowed-tools:
 - 命中红线（买入/卖出/目标价/翻倍/上车…）→ 停下改写。
 
 ## 1. 三步工作流
+
+首次或换机：`bash scripts/bootstrap.sh` → `python3 scripts/fetch.py --probe` 确认 akshare 可连。
+
 ```
 python3 scripts/fetch.py <代码> [out目录]     # 取数 → out/<代码>/*.csv + _report.json
-python3 scripts/analyze.py out/<代码>          # 算指标 → out/<代码>/analysis.json
+python3 scripts/analyze.py out/<代码>          # 算指标 → out/<代码>/analysis.json（含龙虎榜买卖对称度）
 python3 scripts/build_report.py out/<代码>     # 据 analysis.json 出贴图初稿（数字已对）
 node templates/screenshot.js <贴图目录>        # 截图 output/，出图即删 HTML
 ```
@@ -67,13 +70,16 @@ node templates/screenshot.js <贴图目录>        # 截图 output/，出图即�
 4. 套合规框架，发公众号 + 头条；建 `发布记录.md` 回填数据。
 
 ## 6. 文件
-- `scripts/fetch.py` — 取数引擎（任意代码）
-- `scripts/analyze.py` — 指标计算 → analysis.json
+- `scripts/bootstrap.sh` — 一键 venv + 装依赖
+- `scripts/fetch.py` — 取数引擎（`--probe` 探针）
+- `scripts/analyze.py` — 指标计算 → analysis.json（含龙虎榜对称度）
 - `scripts/build_report.py` — 据指标出 8 贴图初稿（V2 米白）
 - `templates/screenshot.js` — 1080×1350 @2x 截图，出图即删
 - `references/compliance.md` — 金融合规护栏（先读）
+- `references/lhb-symmetry.md` — 龙虎榜买卖对称度解读护栏
+- `references/title-checklist.md` — 标题/封面合规自检
 - `references/report-structure.md` — 栏目固定报告结构
-- `requirements.txt` — akshare + pandas
+- `requirements.txt` — akshare + pandas（版本 pin）
 
 ## 7. 案例
 首版样例：利通电子 603629（`Pi.dev/利通电子/litong-0619/`，公众号长文+8贴图、头条三件套）。
